@@ -118,6 +118,20 @@ public class TodoItem {
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
+    
+    // Additional setter for String input from forms
+    public void setDueDate(String dueDateStr) {
+        if (dueDateStr != null && !dueDateStr.trim().isEmpty()) {
+            try {
+                this.dueDate = LocalDateTime.parse(dueDateStr.replace(" ", "T"));
+            } catch (Exception e) {
+                // If parsing fails, set to null
+                this.dueDate = null;
+            }
+        } else {
+            this.dueDate = null;
+        }
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

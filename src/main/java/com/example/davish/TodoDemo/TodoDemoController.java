@@ -73,7 +73,11 @@ public class TodoDemoController {
                          RedirectAttributes redirectAttributes) {
         
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Please fix the validation errors.");
+            StringBuilder errorMessage = new StringBuilder("Validation errors: ");
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMessage.append(error.getDefaultMessage()).append("; ");
+            });
+            redirectAttributes.addFlashAttribute("errorMessage", errorMessage.toString());
             redirectAttributes.addFlashAttribute("errorType", "validation");
             return "redirect:/";
         }
