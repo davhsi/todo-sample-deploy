@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "todo_items")
@@ -121,11 +122,14 @@ public class TodoItem {
     
     // Additional setter for String input from forms
     public void setDueDate(String dueDateStr) {
+        // The converter will handle the string to LocalDateTime conversion
+        // This method is kept for backward compatibility
         if (dueDateStr != null && !dueDateStr.trim().isEmpty()) {
             try {
-                this.dueDate = LocalDateTime.parse(dueDateStr.replace(" ", "T"));
+                // Use the same format as the converter
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                this.dueDate = LocalDateTime.parse(dueDateStr.trim(), formatter);
             } catch (Exception e) {
-                // If parsing fails, set to null
                 this.dueDate = null;
             }
         } else {
