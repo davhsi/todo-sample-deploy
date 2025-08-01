@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  deploy:
+  build-push-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,7 +39,15 @@ jobs:
 
       - name: Push Docker Image to DockerHub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:${{ env.IMAGE_TAG }}
-
+        
+      - name: Also tag as 'latest' and push
+        run: |
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:${{ env.IMAGE_TAG }} ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
+    
+      - name: Trigger Deploy on Render
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        
       # - name: Deploy to EC2 via SSH
       #   uses: appleboy/ssh-action@v1.0.0
       #   with:
