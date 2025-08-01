@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class TodoItem {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
     @NotBlank(message = "Category is required")
