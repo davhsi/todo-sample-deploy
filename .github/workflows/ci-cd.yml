@@ -73,7 +73,3 @@ jobs:
       #       # Health check
       #       echo "Performing health check..."
       #       curl --fail http://localhost:8080/actuator/health || (echo "App failed health check" && exit 1)
-<<<<<<< HEAD
-
-=======
->>>>>>> 8d230cc (update)
