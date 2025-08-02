@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example.davish</groupId>
-  <artifactId>TodoDemo</artifactId>
+  <artifactId>Toodoo</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>TodoDemo</name>
-  <description>Sample ToDo app for Spring Boot</description>
+  <name>Toodoo</name>
+  <description>Enhanced Toodoo app for Spring Boot - Modular Architecture</description>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
