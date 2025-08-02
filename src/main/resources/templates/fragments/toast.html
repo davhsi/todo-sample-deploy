@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="toast-container" class="toast-container">
+    <div th:if="${successMessage}" class="toast show" role="alert">
+        <div class="toast-header">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong class="me-auto">SUCCESS</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body" th:text="${successMessage}"></div>
+    </div>
+    
+    <div th:if="${errorMessage}" class="toast show" role="alert">
+        <div class="toast-header">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <strong class="me-auto">ERROR</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body" th:text="${errorMessage}"></div>
+    </div>
+</div>
+</html> 

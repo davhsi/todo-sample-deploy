@@ -1,90 +1,68 @@
+
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Error - Todo App</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
-    <style>
-        .error-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .error-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            padding: 3rem;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-        }
-        .error-icon {
-            font-size: 4rem;
-            color: #dc3545;
-            margin-bottom: 1rem;
-        }
-        .btn-home {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 1rem;
-            transition: transform 0.3s ease;
-        }
-        .btn-home:hover {
-            transform: translateY(-2px);
-            color: white;
-            text-decoration: none;
-        }
-    </style>
+<head th:replace="fragments/header :: head">
+    <title>Error - Toodoo</title>
 </head>
 <body>
-    <div class="error-container">
-        <div class="error-card">
-            <div class="error-icon">
-                <i class="fas fa-exclamation-triangle"></i>
+    <!-- Navigation -->
+    <nav th:replace="fragments/header :: navbar"></nav>
+
+    <div class="container main-container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3 class="mb-0">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            ERROR OCCURRED
+                        </h3>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="error-icon mb-4">
+                            <i class="fas fa-exclamation-triangle fa-4x text-danger"></i>
+                        </div>
+                        
+                        <h4 class="mb-4">OOPS! SOMETHING WENT WRONG</h4>
+                        
+                        <div th:if="${errorMessage}" class="alert alert-danger mb-3" role="alert">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <span th:text="${errorMessage}">Error message</span>
+                        </div>
+                        
+                        <div th:if="${errorDetails}" class="alert alert-info mb-3" role="alert">
+                            <i class="fas fa-lightbulb me-2"></i>
+                            <span th:text="${errorDetails}">Error details</span>
+                        </div>
+                        
+                        <div th:if="${status}" class="mb-3">
+                            <small class="text-muted">
+                                ERROR CODE: <span th:text="${status}" class="badge bg-secondary">500</span>
+                            </small>
+                        </div>
+                        
+                        <p class="text-muted mb-4">
+                            WE'RE SORRY, BUT SOMETHING UNEXPECTED HAPPENED. 
+                            PLEASE TRY AGAIN OR CONTACT SUPPORT IF THE PROBLEM PERSISTS.
+                        </p>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a href="/" class="btn btn-typewriter">
+                                <i class="fas fa-home me-2"></i>
+                                GO BACK HOME
+                            </a>
+                            <button onclick="history.back()" class="btn btn-typewriter">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                GO BACK
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <h2 class="text-danger mb-3">Oops! Something went wrong</h2>
-            
-            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-                <i class="fas fa-info-circle me-2"></i>
-                <span th:text="${errorMessage}">Error message</span>
-            </div>
-            
-            <div th:if="${errorDetails}" class="alert alert-info" role="alert">
-                <i class="fas fa-lightbulb me-2"></i>
-                <span th:text="${errorDetails}">Error details</span>
-            </div>
-            
-            <div th:if="${status}" class="text-muted mb-3">
-                <small>Error Code: <span th:text="${status}">500</span></small>
-            </div>
-            
-            <p class="text-muted mb-4">
-                We're sorry, but something unexpected happened. Please try again or contact support if the problem persists.
-            </p>
-            
-            <a href="/" class="btn-home">
-                <i class="fas fa-home me-2"></i>
-                Go Back Home
-            </a>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <div th:replace="fragments/footer :: scripts"></div>
 </body>
 </html> 
