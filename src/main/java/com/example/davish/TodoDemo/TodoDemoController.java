@@ -70,7 +70,8 @@ public class TodoDemoController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addTodo(@Valid @ModelAttribute("newitem") TodoItem requestItem, 
                          BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes) {
+                         RedirectAttributes redirectAttributes,
+                         Model model) {
         
         if (bindingResult.hasErrors()) {
             StringBuilder errorMessage = new StringBuilder("Validation errors: ");
@@ -79,6 +80,19 @@ public class TodoDemoController {
             });
             redirectAttributes.addFlashAttribute("errorMessage", errorMessage.toString());
             redirectAttributes.addFlashAttribute("errorType", "validation");
+            
+            // Ensure we have a valid model for the redirect
+            try {
+                List<TodoItem> allItems = new ArrayList<>();
+                repository.findAll().forEach(allItems::add);
+                TodoListViewModel viewModel = new TodoListViewModel((ArrayList<TodoItem>) allItems);
+                calculateStatistics(viewModel);
+                redirectAttributes.addFlashAttribute("items", viewModel);
+                redirectAttributes.addFlashAttribute("newitem", new TodoItem());
+            } catch (Exception e) {
+                logger.error("Error preparing model for redirect", e);
+            }
+            
             return "redirect:/";
         }
         
@@ -96,6 +110,18 @@ public class TodoDemoController {
         } catch (Exception e) {
             logger.error("Error adding task", e);
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to add task. Please try again.");
+            
+            // Ensure we have a valid model for the redirect even on error
+            try {
+                List<TodoItem> allItems = new ArrayList<>();
+                repository.findAll().forEach(allItems::add);
+                TodoListViewModel viewModel = new TodoListViewModel((ArrayList<TodoItem>) allItems);
+                calculateStatistics(viewModel);
+                redirectAttributes.addFlashAttribute("items", viewModel);
+                redirectAttributes.addFlashAttribute("newitem", new TodoItem());
+            } catch (Exception ex) {
+                logger.error("Error preparing model for redirect", ex);
+            }
         }
         
         return "redirect:/";
