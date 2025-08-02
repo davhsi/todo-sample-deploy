@@ -1,4 +1,4 @@
-package com.example.davish.TodoDemo;
+package com.example.davish.Toodoo.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -99,11 +99,11 @@ public class TodoItem {
     public boolean isComplete() {
         return complete;
     }
-    
+
     public void setComplete(boolean complete) {
         this.complete = complete;
     }
-    
+
     public Priority getPriority() {
         return priority;
     }
@@ -119,17 +119,14 @@ public class TodoItem {
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
-    
-    // Additional setter for String input from forms
+
     public void setDueDate(String dueDateStr) {
-        // The converter will handle the string to LocalDateTime conversion
-        // This method is kept for backward compatibility
         if (dueDateStr != null && !dueDateStr.trim().isEmpty()) {
             try {
-                // Use the same format as the converter
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                 this.dueDate = LocalDateTime.parse(dueDateStr.trim(), formatter);
             } catch (Exception e) {
+                // If parsing fails, set to null
                 this.dueDate = null;
             }
         } else {
@@ -152,8 +149,8 @@ public class TodoItem {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-    
+
     public boolean isOverdue() {
-        return dueDate != null && !complete && LocalDateTime.now().isAfter(dueDate);
+        return dueDate != null && !complete && dueDate.isBefore(LocalDateTime.now());
     }
-}
+} 
